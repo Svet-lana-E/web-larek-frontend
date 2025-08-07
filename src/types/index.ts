@@ -1,88 +1,54 @@
-interface ICard<T> {
+// -----------  карточка---------------
+
+export interface ICard {
   id: string;
   title: string;
-  category?: string;
-  image?: string;
+  category: string;
+  image: string;
   price: number | null;
-  description?: string;
-  inBasket?: boolean;
+  description: string;
+  inBasket: boolean;
+} 
+
+export interface ICardCompact {
+  title: string;
+  price: number | null;
+  index?: number;
+  id?: string;
 }
 
-interface IOrderForm {
+export interface ICardCatalog {
+  id: string;
+  title: string;
+  category: string;
+  image: string;
+  price: number | null;
+}
+
+// -------------- форма заказа-------------
+export interface IContacts {
+  payment?: string | null;
   address: string;
-}
-
-interface IContactsForm {
   phone: string;
   email: string;
 }
 
-type IContacts = IContactsForm & IOrderForm
+// ------------ Размещение заказа ----------------
 
-interface IOrder extends IContacts  {
-  payment: 'online' | 'cash';
+export interface IOrder extends IContacts  {
+  payment: string;
   total: number;
   items: string[];
 }
 
-interface ISuccess {
-    id: string;
-    total: number;
-}
-
-type CardCompact = {
-  title: HTMLElement,
-  price: HTMLElement,
-  inBasket: boolean
-}
-
-type CardFull = {
-  title: HTMLElement;
-  category: HTMLElement;
-  image: HTMLElement;
-  price: HTMLElement;
-  description: HTMLElement;
-}
-
-type CardCatalog = {
-  title: HTMLElement;
-  category: HTMLElement;
-  image: HTMLElement;
-  price: HTMLElement;
-}
-
-interface ICatalog {
-    catalog: HTMLElement[];
-}
-
-interface IPage {
-    counter: number;
-    catalog: HTMLElement[];
-    locked: boolean;
-}
-
-interface IAppApi {
-    getItemList: () => Promise<ICard<CardFull>[]>;
-    getItem: (id: string) => Promise<ICard<CardFull>>;
-    placeOrder: (order: IOrder) => Promise<ISuccess>;
-}
-
-type ServerResponse<T> = {
+export interface ISuccess {
+  id: string;
   total: number;
-  items?: T[];
+
 }
 
-interface IFormState {
-    valid: boolean;
-    errors: string[];
-}
 
-interface IModalData {
-    content: HTMLElement;
-}
+// ------------ Ошибки ----------------
 
-interface IBasketView {
-  items: HTMLElement[];
-  total: number;
-  selected: string[];
-}
+export type FormErrors = Partial<Record<keyof IContacts, string>>;
+
