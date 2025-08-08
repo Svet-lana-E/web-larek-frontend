@@ -53,4 +53,16 @@ export abstract class Component<T> {
         Object.assign(this as object, data ?? {});
         return this.container;
     }
+
+    // Установить валюту
+    setCurrency(element: HTMLElement, value: number){
+        let sinaps;
+        if(String(value).endsWith('1')) { 
+            sinaps = ' синапс' 
+        } else if(
+            String(value).endsWith('2') || String(value).endsWith('3') || String(value).endsWith('4')) { 
+                sinaps = ' синапса' 
+            } else sinaps = ' синапсов'; 
+        this.setText(element, value+sinaps) 
+    }
 }

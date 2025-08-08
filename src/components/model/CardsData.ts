@@ -28,7 +28,7 @@ export class CardsData {
       item.inBasket = false;
       return item as ICard
       })
-    this.events.emit('cards:changed');
+    this.events.emit('initialData:loaded');
   };
 
   set preview(cardId: string) {

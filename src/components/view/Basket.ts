@@ -6,7 +6,7 @@ import { ICardCompact } from "../../types";
 export interface IBasketView {
   items: HTMLElement[];
   total: number;
-  selected: string[];
+  selected: boolean;
 }
 
 export class Basket extends Component<IBasketView>{
@@ -40,8 +40,8 @@ export class Basket extends Component<IBasketView>{
     }
   }
 
-  set selected(items: string[] | null) {
-    if(items.length) {
+  set selected(value: boolean) {
+    if(value) {
       this.setDisabled(this._button, false);
     } else {
       this.setDisabled(this._button, true);
@@ -49,17 +49,7 @@ export class Basket extends Component<IBasketView>{
   }
 
   set total(total: number | null) {
-    if (!total) {
-      this.setText(this._total, '0 синапсов')
-    } else {
-      let sinaps;
-      if(String(total).endsWith('1')) {
-        sinaps = ' синапс'
-      } else if(String(total).endsWith('2') || String(total).endsWith('3') || String(total).endsWith('4')) {
-        sinaps = ' синапса'
-      } else sinaps = ' синапсов';
-      this.setText(this._total, total+sinaps)
-    }
+      this.setCurrency(this._total, total)
   }
 }
 
@@ -110,18 +100,7 @@ export class BasketItem extends Component<ICardCompact> {
   }
 
   set price(value: number) {
-
-     if (!value) {
-      this.setText(this.cardPrice, '0 синапсов')
-    } else {
-      let sinaps;
-      if(String(value).endsWith('1')) {
-        sinaps = ' синапс'
-      } else if(String(value).endsWith('2') || String(value).endsWith('3') || String(value).endsWith('4')) {
-        sinaps = ' синапса'
-      } else sinaps = ' синапсов';
-      this.setText(this.cardPrice, value+sinaps)
-    }
+    this.setCurrency(this.cardPrice, value)
   }
 }
 

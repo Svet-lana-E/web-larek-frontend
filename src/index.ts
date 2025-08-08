@@ -57,7 +57,6 @@ ensureElement<HTMLElement>('.modal_active').classList.remove('modal_active');
 api.getItemList()
   .then((data) => {
     cardsData.cards = data;
-    events.emit('initialData:loaded');
   })
   .catch((err) => {
     console.error(err);
@@ -113,10 +112,16 @@ events.on('card:basket', (data: { id: string, obj: HTMLElement }) => {
       const basketListItem = new BasketItem(cloneTemplate(cardBasketTemplate), events);
       basketListItem.index = stateData._selected.indexOf(item) + 1;
       return basketListItem.render(item)})
+      let basketButtonStatus: boolean;
+      switch (compactCards.length) {
+        case (0):
+          basketButtonStatus = true;
+        default: basketButtonStatus = false;
+      }
       modal.render({content: basket.render({
         items: compactCards,
         total: stateData._total,
-        selected: stateData._items,
+        selected: basketButtonStatus,
         })
   })
   }})     
@@ -137,10 +142,17 @@ events.on('basket:open', () => {
   const basketListItem = new BasketItem(cloneTemplate(cardBasketTemplate), events);
   basketListItem.index = stateData._selected.indexOf(item) + 1;
   return basketListItem.render(item)})
+  let basketButtonStatus: boolean;
+  switch (compactCards.length) {
+    case (0):
+      basketButtonStatus = false
+      break;
+    default: basketButtonStatus = true;
+  }
   modal.render({content: basket.render({
     items: compactCards,
     total: stateData._total,
-    selected: stateData._items,
+    selected: basketButtonStatus,
     })
   })
 });

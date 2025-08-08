@@ -40,13 +40,7 @@ export class Card<T> extends Component<T>{
     if (!price) {
       this.setText(this.cardPrice, 'Бесценно');
     } else {
-        let ending = 'ов';
-        if (String(price).endsWith('2') || String(price).endsWith('3') || String(price).endsWith('4')) {
-          ending = 'а';
-        } else if (String(price).endsWith('1')) {
-          ending = '';
-         }
-        this.setText(this.cardPrice, `${price} синапс${ending}`)
+      this.setCurrency(this.cardPrice, price)
       }
   };
 
